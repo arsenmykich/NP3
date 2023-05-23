@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  webserver:
+    image: httpd:latest
+    ports:
+      - "80:80"
+  server-check:
+    build: .
+    volumes:
+     - ./myscript.sh:/usr/local/bin/myscript.sh
+    depends_on:
+      - webserver
+    command: >
+      sh -c "while sleep 30; do myscript.sh; done"
